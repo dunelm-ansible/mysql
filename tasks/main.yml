@@ -78,7 +78,7 @@
       collation: utf8_bin
       encoding: utf8
   with_items: "{{ mysql_databases }}"
-  when: mysql_databases|lower != 'none'
+  when: mysql_databases|lower != 'none' and mysql_databases is defined
 
 - name: Create Users
   mysql_user:
@@ -89,7 +89,7 @@
       priv: "{{ item['user']['privileges'] }}"
       state: present
   with_items: "{{ mysql_users }}"
-  when: mysql_users|lower != 'none'
+  when: mysql_users|lower != 'none' and mysql_users is defined
 
 - name: restart mysql
   service:
